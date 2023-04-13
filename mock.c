@@ -191,14 +191,11 @@ int32_t main(const int32_t argc,
                 goto help;
 
         const char *choice = argv[1];
-        if (strcmp(choice, "--file") == 0 ||
-            strcmp(choice, "-f") == 0)
+        if (!strcmp(choice, "--file") || !strcmp(choice, "-f"))
                 return mockFile(argc > 2 ? argv[2] : NULL);
-        if (strcmp(choice, "--parameters") == 0 ||
-            strcmp(choice, "-p") == 0)
+        if (!strcmp(choice, "--parameters") || !strcmp(choice, "-p"))
                 return mockAllArgs(argc - 2, argv + 2);
-        if (strcmp(choice, "--interactive") == 0 ||
-            strcmp(choice, "-i") == 0)
+        if (!strcmp(choice, "--interactive") || !strcmp(choice, "-i"))
                 return interactiveMode();
 
         printf("Unrecognized option '%s'.\n", argv[1]);
