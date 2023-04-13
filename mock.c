@@ -1,3 +1,22 @@
+/**
+ *  Mock - A fun, small, hack program that 'mocks' a file,
+ *         user input, etc. See usage.
+ * 
+ *  Copyright (C) 2023  Connor Inch (TEMtheLEM)  <temthelem@duck.com>
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <inttypes.h>
@@ -47,6 +66,7 @@ int32_t urandomInt32() {
 #endif
 
 
+// Makes a character uppercase.
 char upper(char c) {
         if ('a' <= c && c <= 'z') {
                 c -= 'a';
@@ -57,6 +77,7 @@ char upper(char c) {
 }
 
 
+// Makes a character lowercase.
 char lower(char c) {
         if ('A' <= c && c <= 'Z') {
                 c -= 'A';
@@ -82,6 +103,7 @@ char* mockString(const char *s) {
 }
 
 
+// Mock a stream of characters.
 void mockStream(void *stream) {
         char *str = NULL,
               buffer[STD_BUFF_SIZE];
@@ -105,6 +127,7 @@ void mockStream(void *stream) {
 }
 
 
+// Used for --file or -f.
 int32_t mockFile(const char *filename) {
         if (!filename) {
                 printf("Provide a file.");
@@ -124,6 +147,7 @@ int32_t mockFile(const char *filename) {
 }
 
 
+// Used for --parameters or -p.
 int32_t mockAllArgs(const int32_t argc,
                     const char **argv) {
         for (int32_t i = 0; i < argc; i++) {
@@ -137,6 +161,7 @@ int32_t mockAllArgs(const int32_t argc,
 }
 
 
+// Used for --interactive or -i.
 int32_t interactiveMode() {
         mockStream(stdin);
 
@@ -144,11 +169,16 @@ int32_t interactiveMode() {
 }
 
 
+// Display the usage of the program.
 int32_t displayHelp() {
-        printf("Options are;\n\
-        --file | -f . . . . . Mock a file.\n\
-        --parameters | -p . . The following parameters.\n\
-        --interactive | -i  . Start in \"Interactive\" mode.\n");
+        printf(
+
+"Options are;\n\
+    --file | -f . . . . . Mock a file.\n\
+    --parameters | -p . . The following parameters.\n\
+    --interactive | -i  . Start in \"Interactive\" mode.\n"
+
+);
         return 1;
 }
 
