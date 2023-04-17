@@ -91,15 +91,13 @@ char lower(char c) {
 // WARN: free() the returned string!
 char* mockString(const char *s) {
         size_t len = strlen(s);
-        char *m = (char*) malloc(len + 1);
+        char *mocked = (char*) malloc(len + 1);
 
-        for (size_t i = 0; i < len; i++) {
-                char c = s[i];
-                m[i] = RAND() % 2 ? upper(c) : lower(c);
-        }
+        for (size_t i = 0; i < len; i++)
+                mocked[i] = RAND() % 2 ? upper(s[i]) : lower(s[i]);
 
-        m[len] = 0;
-        return m;
+        mocked[len] = 0;
+        return mocked;
 }
 
 
@@ -135,7 +133,7 @@ int32_t mockFile(const char *filename) {
         }
 
         FILE *fp = fopen(filename, "r");
-        if (fp == NULL) {
+        if (!fp) {
                 perror("Error opening file");
                 return 3;
         }
@@ -179,6 +177,7 @@ int32_t displayHelp() {
     --interactive | -i  . Start in \"Interactive\" mode.\n"
 
 );
+
         return 1;
 }
 
