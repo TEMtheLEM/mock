@@ -90,6 +90,8 @@ char lower(char c) {
 
 // WARN: free() the returned string!
 char* mockString(const char *s) {
+        if (!s)
+                return NULL;
         size_t len = strlen(s);
         char *mocked = (char*) malloc(len + 1);
 
@@ -120,6 +122,8 @@ void mockStream(void *stream) {
 
         char *mocked = mockString(str);
         free(str);
+        if (!mocked)
+                return;
         printf("%s", mocked);
         free(mocked);
 }
