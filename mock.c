@@ -132,7 +132,7 @@ void mockStream(void *stream) {
 // Used for --file or -f.
 int32_t mockFile(const char *filename) {
         if (!filename) {
-                printf("Provide a file.");
+                printf("Provide a file.\n");
                 return 2;
         }
 
@@ -157,7 +157,9 @@ int32_t mockAllArgs(const int32_t argc,
                 printf("%s ", mocked);
                 free(mocked);
         }
-        printf("\n");
+
+        if (argc)
+                printf("\n");
 
         return 0;
 }
