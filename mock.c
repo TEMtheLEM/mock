@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <inttypes.h>
 #include <string.h>
+#include "appinfo.h"
 
 
 #define STD_BUFF_SIZE 4096
@@ -173,6 +174,22 @@ int32_t interactiveMode() {
 }
 
 
+// Version
+int32_t displayVersion() {
+        printf(
+
+"mock v%d.%d.%d\n\n\
+Copyright (C) %d Connor Inch (TEMtheLEM)\n\
+This is free software; see the source for copying conditions.\n\
+There is absolutely NO warranty; not even for\n\
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n",
+
+MAJOR_VER, MINOR_VER, BUGFIX_VER, COPYRIGHT_YEAR);
+
+        return 0;
+}
+
+
 // Display the usage of the program.
 int32_t displayHelp() {
         printf(
@@ -180,7 +197,8 @@ int32_t displayHelp() {
 "Options are;\n\
     --file | -f . . . . . Mock a file.\n\
     --parameters | -p . . The following parameters.\n\
-    --interactive | -i  . Start in \"Interactive\" mode.\n"
+    --interactive | -i  . Start in \"Interactive\" mode.\n\
+    --version | -v  . . . Display Copyright(s) & version.\n"
 
 );
 
@@ -202,6 +220,8 @@ int32_t main(const int32_t argc,
                 return mockAllArgs(argc - 2, argv + 2);
         if (!strcmp(choice, "--interactive") || !strcmp(choice, "-i"))
                 return interactiveMode();
+        if (!strcmp(choice, "--version") || !strcmp(choice, "-v"))
+                return displayVersion();
 
         printf("Unrecognized option '%s'.\n", argv[1]);
 
