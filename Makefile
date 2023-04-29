@@ -1,7 +1,7 @@
 WARNS=-Wextra -Werror -Wno-unused-parameter
 FSANS=-fsanitize=address,undefined
 OPTS=-O3 -Os
-CC=clang
+CC=ccache clang
 
 debug:
 	$(CC) mock.c -o mock $(WARNS) $(FSANS) -O0
