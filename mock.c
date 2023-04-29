@@ -8,12 +8,12 @@
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation, either version 3 of the License, or
  *  (at your option) any later version.
- *
+ * 
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- *
+ * 
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -130,7 +130,7 @@ void mockStream(void *stream) {
 }
 
 
-// Used for --file or -f.
+// File mode. Used with --file or -f.
 int32_t mockFile(const char *filename) {
         if (!filename) {
                 printf("Provide a file.\n");
@@ -150,7 +150,7 @@ int32_t mockFile(const char *filename) {
 }
 
 
-// Used for --parameters or -p.
+// Parameter mode. Used with --parameters or -p.
 int32_t mockAllArgs(const int32_t argc,
                     const char **argv) {
         for (int32_t i = 0; i < argc; i++) {
@@ -166,7 +166,7 @@ int32_t mockAllArgs(const int32_t argc,
 }
 
 
-// Used for --interactive or -i.
+// Interactive mode. Used with --interactive or -i.
 int32_t interactiveMode() {
         mockStream(stdin);
 
@@ -174,12 +174,12 @@ int32_t interactiveMode() {
 }
 
 
-// Version
+// Version & Copyright information. Shown with --version or -v.
 int32_t displayVersion() {
         printf(
 
 "mock v%d.%d.%d\n\n\
-Copyright (C) %d Connor Inch (TEMtheLEM)\n\
+Copyright (C) %d  Connor Inch  (TEMtheLEM)\n\
 This is free software; see the source for copying conditions.\n\
 There is absolutely NO warranty; not even for\n\
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n",
