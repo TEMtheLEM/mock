@@ -52,14 +52,14 @@ int32_t urandomInt32() {
         int32_t n;
 
         if (CryptAcquireContext(&h_crypt_prov, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT)) {
-                if (CryptGenRandom(h_crypt_prov, sizeof n, (BYTE*) &n)) {
-                        CryptReleaseContext(h_crypt_prov, 0);
-                        return n;
-                }
+                WINBOOL success = CryptGenRandom(h_crypt_prov, sizeof n, (BYTE*) &n);
                 CryptReleaseContext(h_crypt_prov, 0);
+                if (success)
+                        return n;
         }
 
-        return -1;
+        printf("Error generating secure cryptographic number on __WIN32__ platform.\n");
+        exit(10);
 }
 #else
 #error "Unsupported operating system."
