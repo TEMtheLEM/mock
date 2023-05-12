@@ -196,7 +196,7 @@ int32_t displayHelp() {
 
 "Options are;\n\
     --file | -f . . . . . Mock a file.\n\
-    --parameters | -p . . The following parameters.\n\
+    --parameters | -p . . Mock all additional parameters.\n\
     --interactive | -i  . Start in \"Interactive\" mode.\n\
     --version | -v  . . . Display Copyright(s) & version.\n"
 
