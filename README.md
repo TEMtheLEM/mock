@@ -1,5 +1,5 @@
 # Mock
+A fun, small, hack program that 'mocks' a file, user input,
+etc.
 
-A quick, fun and dirty hack.
-
-Use it if you wish.
+See usage (USAGE.md or run this program without args).

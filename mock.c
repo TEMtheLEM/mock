@@ -1,6 +1,6 @@
 /**
- *  Mock - A fun, small, hack program that 'mocks' a file,
- *         user input, etc. See usage.
+ *  Mock - A fun, small, hack program that 'mocks' a file, user input,
+ *         etc. See usage (USAGE.md or run this program without args).
  * 
  *  Copyright (C) 2023  Connor Inch (TEMtheLEM)  <temthelem@duck.com>
  * 
