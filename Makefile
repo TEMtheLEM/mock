@@ -8,3 +8,7 @@ debug:
 
 release:
 	$(CC) mock.c -o mock $(WARNS) $(OPTS)
+
+# Uses MinGW to compile a windows binary on other platforms.
+windows:
+	make release CC=x86_64-w64-mingw32-gcc
