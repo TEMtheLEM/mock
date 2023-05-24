@@ -104,32 +104,6 @@ char* mockString(const char *s) {
 }
 
 
-// Mock a stream of characters.
-void mockStream(void *stream) {
-        char *str = NULL,
-              buffer[STD_BUFF_SIZE];
-        size_t str_size = 0,
-               buff_len = 0;
-
-        while (fgets(buffer, STD_BUFF_SIZE, stream)) {
-                buff_len = strlen(buffer);
-                str_size += buff_len;
-
-                str = (char*) realloc(str, str_size + 1);
-
-                str[str_size - buff_len] = 0;
-                strcat(str, buffer);
-        }
-
-        char *mocked = mockString(str);
-        free(str);
-        if (!mocked)
-                return;
-        printf("%s", mocked);
-        free(mocked);
-}
-
-
 // File mode. Used with --file or -f.
 int32_t mockFile(const char *filename) {
         if (!filename) {
@@ -143,7 +117,13 @@ int32_t mockFile(const char *filename) {
                 return 3;
         }
 
-        mockStream(fp);
+        char buffer[STD_BUFF_SIZE];
+        while (fgets(buffer, STD_BUFF_SIZE, fp)) {
+                char *mocked = mockString(buffer);
+                printf("%s", mocked);
+                free(mocked);
+        }
+
         fclose(fp);
 
         return 0;
@@ -168,8 +148,29 @@ int32_t mockAllArgs(const int32_t argc,
 
 // Interactive mode. Used with --interactive or -i.
 int32_t interactiveMode() {
-        mockStream(stdin);
+        char *str = NULL,
+              buffer[STD_BUFF_SIZE];
+        size_t str_size = 0,
+               buff_len = 0;
 
+        while (fgets(buffer, STD_BUFF_SIZE, stdin)) {
+                buff_len = strlen(buffer);
+                str_size += buff_len;
+
+                str = (char*) realloc(str, str_size + 1);
+
+                str[str_size - buff_len] = 0;
+                strcat(str, buffer);
+        }
+
+        char *mocked = mockString(str);
+        free(str);
+        if (!mocked)
+                goto end;
+        printf("%s", mocked);
+        free(mocked);
+
+        end:
         return 0;
 }
 
