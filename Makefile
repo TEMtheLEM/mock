@@ -3,6 +3,15 @@ FSANS=-fsanitize=address,undefined
 OPTS=-O3 -Os
 CC=ccache clang
 
+help:
+	@echo "Makefile Usage; make [option]"
+	@echo "Available [option]s;"
+	@echo "    help . . . Display this text."
+	@echo "    debug  . . Compile a binary made for debugging."
+	@echo "    release  . Compile a binary optimized for release."
+	@echo "    windows  . Use MinGW cross-platform compiler to"
+	@echo "        compile a windows binary (will be release)."
+
 debug:
 	$(CC) mock.c -o mock $(WARNS) $(FSANS) -O0
 
