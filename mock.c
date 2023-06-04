@@ -27,6 +27,18 @@
 #define STD_BUFF_SIZE 4096
 
 
+enum EXITS {
+        EXIT_OK,
+        EXIT_HELP,
+        EXIT_USER_FILE_NOT_GIVEN,
+        EXIT_USER_FILE_NOT_OPENED,
+        // OS specific ones.
+        EXIT_UNIX_URANDOM_NOT_OPENED,
+        EXIT_UNIX_URANDOM_BAD_READ,
+        EXIT_WIN32_BAD_GENERATION,
+};
+
+
 #ifdef __unix__
 // These functions are better but only available on *nix.
 #define RAND() random()
@@ -34,8 +46,15 @@
 
 int32_t urandomInt32(void) {
         FILE *fp = fopen("/dev/urandom", "r");
+        if (!fp) {
+                perror("Unable to open /dev/urandom for reading");
+                exit(EXIT_UNIX_URANDOM_NOT_OPENED);
+        }
         int32_t n;
-        fread(&n, 1, sizeof n, fp);
+        if (fread(&n, 1, sizeof n, fp) != sizeof n) {
+                perror("Error while reading from /dev/urandom");
+                exit(EXIT_UNIX_URANDOM_BAD_READ);
+        }
         fclose(fp);
         return n;
 }
@@ -59,7 +78,7 @@ int32_t urandomInt32(void) {
         }
 
         printf("Error generating secure cryptographic number on __WIN32__ platform.\n");
-        exit(10);
+        exit(EXIT_WIN32_BAD_GENERATION);
 }
 #else
 #error "Unsupported operating system."
@@ -108,13 +127,13 @@ char* mockString(const char *s) {
 int32_t mockFile(const char *filename) {
         if (!filename) {
                 printf("Provide a file.\n");
-                return 2;
+                return EXIT_USER_FILE_NOT_GIVEN;
         }
 
         FILE *fp = fopen(filename, "r");
         if (!fp) {
                 perror("Error opening file");
-                return 3;
+                return EXIT_USER_FILE_NOT_OPENED;
         }
 
         char buffer[STD_BUFF_SIZE];
@@ -126,7 +145,7 @@ int32_t mockFile(const char *filename) {
 
         fclose(fp);
 
-        return 0;
+        return EXIT_OK;
 }
 
 
@@ -142,7 +161,7 @@ int32_t mockAllArgs(const int32_t argc,
         if (argc)
                 printf("\n");
 
-        return 0;
+        return EXIT_OK;
 }
 
 
@@ -171,7 +190,7 @@ int32_t interactiveMode(void) {
         free(mocked);
 
         end:
-        return 0;
+        return EXIT_OK;
 }
 
 
@@ -187,7 +206,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n",
 
 MAJOR_VER, MINOR_VER, BUGFIX_VER, COPYRIGHT_YEAR);
 
-        return 0;
+        return EXIT_OK;
 }
 
 
@@ -203,7 +222,7 @@ int32_t displayHelp(void) {
 
 );
 
-        return 1;
+        return EXIT_HELP;
 }
 
 
