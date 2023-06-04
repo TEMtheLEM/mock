@@ -32,7 +32,7 @@
 #define RAND() random()
 #define SRAND(s) srandom(s)
 
-int32_t urandomInt32() {
+int32_t urandomInt32(void) {
         FILE *fp = fopen("/dev/urandom", "r");
         int32_t n;
         fread(&n, 1, sizeof n, fp);
@@ -47,7 +47,7 @@ int32_t urandomInt32() {
 
 #include <windows.h>
 
-int32_t urandomInt32() {
+int32_t urandomInt32(void) {
         HCRYPTPROV h_crypt_prov;
         int32_t n;
 
@@ -147,7 +147,7 @@ int32_t mockAllArgs(const int32_t argc,
 
 
 // Interactive mode. Used with --interactive or -i.
-int32_t interactiveMode() {
+int32_t interactiveMode(void) {
         char *str = NULL,
               buffer[STD_BUFF_SIZE];
         size_t str_size = 0,
@@ -176,7 +176,7 @@ int32_t interactiveMode() {
 
 
 // Version & Copyright information. Shown with --version or -v.
-int32_t displayVersion() {
+int32_t displayVersion(void) {
         printf(
 
 "mock v%d.%d.%d\n\n\
@@ -192,7 +192,7 @@ MAJOR_VER, MINOR_VER, BUGFIX_VER, COPYRIGHT_YEAR);
 
 
 // Display the usage of the program.
-int32_t displayHelp() {
+int32_t displayHelp(void) {
         printf(
 
 "Options are;\n\

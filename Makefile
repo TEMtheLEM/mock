@@ -1,4 +1,4 @@
-WARNS=-Wextra -Werror -Wno-unused-parameter
+WARNS=-Wextra -Werror -Wno-unused-parameter -Wpedantic
 FSANS=-fsanitize=address,undefined
 OPTS=-O3 -Os
 CC=ccache clang
