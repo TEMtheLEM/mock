@@ -51,7 +51,7 @@ int32_t urandomInt32(void) {
                 exit(EXIT_UNIX_URANDOM_NOT_OPENED);
         }
         int32_t n;
-        if (fread(&n, 1, sizeof n, fp) != sizeof n) {
+        if (fread(&n, sizeof n, 1, fp) != 1) {
                 perror("Error while reading from /dev/urandom");
                 exit(EXIT_UNIX_URANDOM_BAD_READ);
         }
@@ -215,10 +215,10 @@ int32_t displayHelp(void) {
         printf(
 
 "Options are;\n\
-    --file | -f . . . . . Mock a file.\n\
-    --parameters | -p . . Mock all additional parameters.\n\
-    --interactive | -i  . Start in \"Interactive\" mode.\n\
-    --version | -v  . . . Display Copyright(s) & version.\n"
+    -f | --file . . . . . Mock a file.\n\
+    -p | --parameters . . Mock all additional parameters.\n\
+    -i | --interactive  . Start in \"Interactive\" mode.\n\
+    -v | --version  . . . Display Copyright(s) & version.\n"
 
 );
 
@@ -234,13 +234,13 @@ int32_t main(const int32_t argc,
                 goto help;
 
         const char *choice = argv[1];
-        if (!strcmp(choice, "--file") || !strcmp(choice, "-f"))
+        if (!strcmp(choice, "-f") || !strcmp(choice, "--file"))
                 return mockFile(argc > 2 ? argv[2] : NULL);
-        if (!strcmp(choice, "--parameters") || !strcmp(choice, "-p"))
+        if (!strcmp(choice, "-p") || !strcmp(choice, "--parameters"))
                 return mockAllArgs(argc - 2, argv + 2);
-        if (!strcmp(choice, "--interactive") || !strcmp(choice, "-i"))
+        if (!strcmp(choice, "-i") || !strcmp(choice, "--interactive"))
                 return interactiveMode();
-        if (!strcmp(choice, "--version") || !strcmp(choice, "-v"))
+        if (!strcmp(choice, "-v") || !strcmp(choice, "--version"))
                 return displayVersion();
 
         printf("Unrecognized option '%s'.\n", argv[1]);
